@@ -368,7 +368,7 @@ h3 {
 @media (max-width: 768px) {
   .bottom-content {
     align-items: flex-start;
-    margin-top: 9rem;
+    margin-top: 7rem;
     text-align: left;
   }
 
