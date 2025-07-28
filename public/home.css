@@ -297,7 +297,7 @@ h3 {
   .hero-content {
     width: 80%;
     left: 10%;
-    top: 10rem;
+    top: 8rem;
   }
   
   .top-content button {
@@ -368,7 +368,7 @@ h3 {
 @media (max-width: 768px) {
   .bottom-content {
     align-items: flex-start;
-    margin-top: 7rem;
+    margin-top: 3rem;
     text-align: left;
   }
 
