@@ -4,8 +4,8 @@ const bcrypt = require("bcryptjs");
 const path = require("path");
 
 const app = express();
-const PORT = 3000;
-
+// const port = 3000;
+const port = process.env.port || 3000;
 // 🔧 Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -81,8 +81,8 @@ app.get("/logout", (req, res) => {
 });
 
 // 🟢 Server Start
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
 
 
