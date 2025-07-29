@@ -1,0 +1,249 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header */
+
+header {
+    background-color: #f54040;
+    color: white;
+    /* padding: 10px 0; */
+    width: 100vw;
+    height: 30vh;
+}
+
+/* Navbar */
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    max-width: 80%;
+    margin: auto;
+    box-sizing: border-box;
+    line-height: 34px;
+    position: relative;
+    top: 30px;
+}
+
+button i {
+  color: white;
+  font-size: 24px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+
+/* Hero-section */
+.hero-section{
+    position: relative;
+    top: 80px;
+    max-width: 80%;
+    margin: auto;
+    box-sizing: border-box;
+    line-height: 34px;
+    padding: 0 1.5rem;
+}
+
+.hero-section h1 {
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+
+.hero-section p {
+    font-size: 18px;
+    color: #d7c4c4;
+    letter-spacing: 1px;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
+/* Hero-section Responsiveness */
+@media(max-width: 768px){
+    .hero-section{
+        max-width: 100%;
+        /* bottom: 40px; */
+    }
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 330px;
+  height: 100%;
+  background-color: #ffffff;
+  color: #333;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: right ease-in-out 0.1s;
+}
+
+.show{
+  right: 0;
+}
+
+/* --- CLOSE BUTTON --- */
+.sidebar .close-btn {
+  border: none;
+  background: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #333;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.sidebar .close-btn i {
+  font-size: 22px;
+  color: #333;
+}
+
+.sidebar .close-btn:hover {
+  color: chocolate;
+}
+
+/* --- PAGES SECTION --- */
+.sidebar .pages {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.sidebar .pages ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar .pages ul li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar .pages ul li:hover {
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+
+.pages ul li i {
+  font-size: 22px;
+  color: chocolate;
+  margin-left: 0.5rem;
+}
+
+.pages ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+  flex: 1;
+  margin-left: 0.5rem;
+  padding: 0.3rem 0;
+}
+
+/* --- CONTACT SECTION --- */
+.contact {
+  padding-top: 2rem;
+  border-top: 1px solid #ddd;
+}
+
+.contact h3 {
+  font-size: 18px;
+  color: chocolate;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.contact ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.contact ul li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 14px;
+}
+
+.contact ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.contact ul li a:hover {
+  color: chocolate;
+}
+
+@media (max-width: 768px) {
+  nav {
+    max-width: 100%;
+  }
+}
+
+.container{
+    max-width: 80%;
+    margin: auto;
+    padding: 0 1.5rem;
+    line-height: 26px;
+    box-sizing: border-box;
+    position: relative;
+    top: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+}
+
+.container h3 {
+    font-weight: 500;
+    font-size: 24px;
+    color: chocolate;
+    letter-spacing: 1px;
+}
+
+/* Container Responsiveness */
+@media(max-width: 768px){
+    .container{
+        max-width: 100%;
+    }
+}

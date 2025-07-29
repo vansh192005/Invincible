@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="/about.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <header>
+        <nav>
+            <h3>INVINCIBLE</h3>
+            <button class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav>
+        <div class="hero-section">
+            <h1>About</h1>
+            <p>Who we are & where do we stand</p>
+        </div>    
+    </header>
+    <main>
+    <div class="container">
+        <h3>Vision</h3>
+        <p>Keeping the core values and the ethics in center, INVINCIBLE – the NGO will be a benchmark in training the youth for a better situation. The NGO will work for enhancement of all good qualities in the modern youth with a brighter way…</p>
+        <h3>Mission</h3>
+        <p>The motive of the NGO is to moderate the young thinking for a happy and developed world. The youth become responsible and understand their own need for the society and country is the heart value of the mission…</p>
+        <h3>Objectives</h3>
+        <p>
+            The idea of establishing NGO came up during the various activities with other NGOs as a part of collaboration with NSS/NCC in college activities. It was a very clear view behind the organization that it will be for young people and specially students development activities will be given priority.
+            <br><br>Keeping the ethics and value system in center, the NGO has thought for such activities, which will fill valuable qualities in the youth. NGO is thankful to all the young students of various colleges who are voluntarily giving a boost to the activities. For spreading awareness in the field of adventure, NGO has planned some very charming events as per regular basis.
+        </p>
+    </div>
+    </main>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="close-btn">
+            <button>
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="pages">
+            <ul>
+                <li>
+                    <i class="fa-regular fa-house"></i>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <i class="fa-regular fa-building"></i>
+                    <a href="/about">About</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-mountain-sun"></i>
+                    <a href="/event">Events</a>
+                </li>
+                <!-- <li>
+                    <i class="fa-regular fa-user"></i>
+                    <a href="/profile">Profile</a>
+                </li> -->
+                <li>
+                    <i class="fa-regular fa-user"></i>
+                    <a href="/login">Login</a>
+                </li>
+            </ul>
+        </div>
+        <div class="contact">
+            <div class="content-top">
+                <h3>Contact</h3>
+                <ul>
+                    <li>
+                        <i class="fa-solid fa-phone"></i>
+                        <a href="tel:+1234567890">+1234567890</a>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-envelope"></i>
+                        <a href="#">info@hotmail.com</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let hamburger = document.querySelector('.hamburger');
+        let sidebar = document.querySelector('.sidebar');
+        let closeBtn = document.querySelector('.close-btn button');
+
+        let imageArr = [
+            '/images/hero-section/climbing.jpg',
+            '/images/hero-section/clouds.jpg',
+            '/images/hero-section/beach.jpg',
+            '/images/hero-section/dessert.jpg'
+        ];
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('show');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+        })
+    </script>
+</body>
+
+</html>
