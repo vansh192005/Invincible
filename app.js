@@ -74,6 +74,11 @@ app.get("/about", (req, res) => {
   res.render("about");
 });
 
+// Events Page
+app.get("/events", (req, res) => {
+  res.render("events");
+});
+
 // 🚪 Logout
 app.get("/logout", (req, res) => {
   req.session.destroy(() => {

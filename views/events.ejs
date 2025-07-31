@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
-    <link rel="stylesheet" href="/about.css">
+    <title>Events</title>
+    <link rel="stylesheet" href="/events.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
         integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,23 +20,25 @@
             </button>
         </nav>
         <div class="hero-section">
-            <h1>About</h1>
-            <p>Who we are & where do we stand</p>
-        </div>    
+            <h1>Events</h1>
+            <p>Life is either a daring adventure or nothing.</p>
+        </div>
     </header>
+
     <main>
-    <div class="container">
-        <h3>Vision</h3>
-        <p>Keeping the core values and the ethics in center, INVINCIBLE – the NGO will be a benchmark in training the youth for a better situation. The NGO will work for enhancement of all good qualities in the modern youth with a brighter way…</p>
-        <h3>Mission</h3>
-        <p>The motive of the NGO is to moderate the young thinking for a happy and developed world. The youth become responsible and understand their own need for the society and country is the heart value of the mission…</p>
-        <h3>Objectives</h3>
-        <p>
-            The idea of establishing NGO came up during the various activities with other NGOs as a part of collaboration with NSS/NCC in college activities. It was a very clear view behind the organization that it will be for young people and specially students development activities will be given priority.
-            <br><br>Keeping the ethics and value system in center, the NGO has thought for such activities, which will fill valuable qualities in the youth. NGO is thankful to all the young students of various colleges who are voluntarily giving a boost to the activities. For spreading awareness in the field of adventure, NGO has planned some very charming events as per regular basis.
-        </p>
-    </div>
+        <div class="events-container">
+            <h3>Upcoming Events</h3>
+            <div class="event-list">
+                <!-- <div class="event-card">
+                    <h4>Mountain Trekking Expedition</h4>
+                    <p>Date: 15th March 2024</p>
+                    <p>Location: Himalayas</p>
+                    <button>Join Now</button>
+                </div> -->
+
+            </div>
     </main>
+
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="close-btn">
@@ -85,19 +87,8 @@
         </div>
     </div>
 
-    <script>
-        let hamburger = document.querySelector('.hamburger');
-        let sidebar = document.querySelector('.sidebar');
-        let closeBtn = document.querySelector('.close-btn button');
+    <script src="/events.js"></script>
 
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('show');
-        });
-
-        closeBtn.addEventListener('click', () => {
-            sidebar.classList.remove('show');
-        })
-    </script>
 </body>
 
 </html>
