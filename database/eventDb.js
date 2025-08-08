@@ -1,9 +1,13 @@
-const mysql = require('mysql2');
-const db = mysql.createConnection({
+// eventDb.js
+const mysql = require('mysql2/promise');
+
+const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: '1234',
-  database: 'invincible'
+  database: 'invincible',
 });
-module.exports = db;
+
+module.exports = pool;
+
 

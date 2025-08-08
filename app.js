@@ -35,36 +35,68 @@ app.get("/", (req, res) => {
 });
 
 // 📝 Signup Page
-app.get("/signup", (req, res) => {
-  res.render("signup");
+app.get("/register", (req, res) => {
+  res.render("register", { user: req.session.user });
 });
 
 // 🔐 Signup Form Submit
 app.post("/signup", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, contact, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
-  users.push({ username, password: hashedPassword });
-  res.redirect("/login");
+
+  db.query(
+    'INSERT INTO users (user_name, email, contact, password) VALUES (?, ?, ?, ?)',
+    [username, email, contact, hashedPassword],
+    (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+    }
+  );
+  console.log(username, email, contact, hashedPassword);
+  const user = { user_name: username, email, contact };
+    req.session.user = user;
+  res.redirect("/");
 });
 
 // 🔑 Login Page
-app.get("/login", (req, res) => {
-  res.render("login");
-});
+// app.get("/login", (req, res) => {
+//   res.render("register");
+// });
 
 // 🔓 Login Form Submit
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  const user = users.find(u => u.username === username);
-  if (user && await bcrypt.compare(password, user.password)) {
-    req.session.user = user;
+
+  try {
+    const [rows] = await db.query('SELECT * FROM users WHERE user_name = ?', [username]);
+
+    if (rows.length === 0) {
+      return res.send("❌ User not found");
+    }
+
+    const user = rows[0];
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.send("❌ Invalid password");
+    }
+
+    req.session.user = { username: user.user_name };
+
     res.redirect("/");
-  } else {
-    res.send("Invalid username or password");
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).send("⚠️ Server error");
   }
 });
 
+
 // 👤 Profile Page (Only if logged in)
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
+
 app.get("/profile", (req, res) => {
   if (req.session.user) {
     res.render("profile", { user: req.session.user });
@@ -105,23 +137,28 @@ app.get('/events', (req, res) => {
 
 // Event Details Page
 app.get('/events/:title', (req, res) => {
-    const eventTitle = req.params.title;
-    // Jo encodeURIComponent se aya vo decode karo (optional)
-    const decodedTitle = decodeURIComponent(eventTitle);
+  const eventTitle = req.params.title;
+  // Jo encodeURIComponent se aya vo decode karo (optional)
+  const decodedTitle = decodeURIComponent(eventTitle);
 
-    db.query('SELECT * FROM events WHERE title = ?', [decodedTitle], (err, results) => {
-        if (err) return res.status(500).send('Database error: ' + err.message);
-        if (results.length === 0) return res.status(404).send('Event not found');
+  db.query('SELECT * FROM events WHERE title = ?', [decodedTitle], (err, results) => {
+    if (err) return res.status(500).send('Database error: ' + err.message);
+    if (results.length === 0) return res.status(404).send('Event not found');
 
-        res.render('eventDetails', { event: results[0] });
-    });
+    res.render('eventDetails', { event: results[0] });
+  });
 });
 
 
 
 // 🚪 Logout
 app.get("/logout", (req, res) => {
-  req.session.destroy(() => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error("Logout error:", err);
+      return res.send("❌ Error logging out");
+    }
+    // res.send("✅ Logged out successfully");
     res.redirect("/");
   });
 });

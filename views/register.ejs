@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="/register.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <h3>INVINCIBLE</h3>
+            <button class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav>
+        <div class="hero-section">
+            <h1>Register</h1>
+        </div>
+    </header>
+
+    <section class="user">
+        <div class="user_options-container">
+            <div class="user_options-text">
+                <div class="user_options-unregistered">
+                    <h2 class="user_unregistered-title">Don't have an account?</h2>
+                    <p class="user_unregistered-text">
+                        Banjo tote bag bicycle rights, High Life sartorial cray craft beer
+                        whatever street art fap.
+                    </p>
+                    <button class="user_unregistered-signup" id="signup-button">
+                        Sign up
+                    </button>
+                </div>
+
+                <div class="user_options-registered">
+                    <h2 class="user_registered-title">Have an account?</h2>
+                    <p class="user_registered-text">
+                        Banjo tote bag bicycle rights, High Life sartorial cray craft beer
+                        whatever street art fap.
+                    </p>
+                    <button class="user_registered-login" id="login-button">
+                        Login
+                    </button>
+                </div>
+            </div>
+
+            <div class="user_options-forms" id="user_options-forms">
+                <div class="user_forms-login">
+                    <h2 class="forms_title">Login</h2>
+                    <form method="post" action="/login" class="forms_form">
+                        <fieldset class="forms_fieldset">
+                            <div class="forms_field">
+                                <input type="text" name="username" placeholder="Username" class="forms_field-input" required autofocus />
+                            </div>
+                            <div class="forms_field">
+                                <input type="password" name="password" placeholder="Password" class="forms_field-input" required />
+                            </div>
+                        </fieldset>
+                        <div class="forms_buttons">
+                            <button type="submit" class="forms_buttons-forgot">
+                                Forgot password?
+                            </button>
+                            <input type="submit" value="Log In" class="forms_buttons-action" />
+                        </div>
+                    </form>
+                </div>
+                <div class="user_forms-signup">
+                    <h2 class="forms_title">Sign Up</h2>
+                    <form method="POST" action="/signup" class="forms_form" onsubmit="return validateForm()">
+                        <fieldset class="forms_fieldset">
+                            <div class="forms_field">
+                                <input type="text" name="username" placeholder="Username" class="forms_field-input"
+                                    required />
+                            </div>
+                            <div class="forms_field">
+                                <input type="email" name="email" placeholder="Email" class="forms_field-input"
+                                    required />
+                            </div>
+                            <div class="forms_field">
+                                <input type="tel" id="contact" name="contact" placeholder="Contact" class="forms_field-input"
+                                    required />
+                            </div>
+                            <div class="forms_field">
+                                <input type="password" name="password" placeholder="Password" class="forms_field-input"
+                                    required />
+                            </div>
+                        </fieldset>
+                        <div class="forms_buttons">
+                            <input type="submit" name = "submit" value="Sign up" class="forms_buttons-action" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="close-btn">
+            <button>
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <div class="pages">
+            <ul>
+                <li>
+                    <i class="fa-regular fa-house"></i>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <i class="fa-regular fa-building"></i>
+                    <a href="/about">About</a>
+                </li>
+                <li>
+                    <i class="fa-solid fa-mountain-sun"></i>
+                    <a href="/events">Events</a>
+                </li>
+                <!-- <li>
+                    <i class="fa-regular fa-user"></i>
+                    <a href="/profile">Profile</a>
+                </li> -->
+                <li>
+                    <i class="fa-regular fa-user"></i>
+                    <a href="/login">Login</a>
+                </li>
+            </ul>
+        </div>
+        <div class="contact">
+            <div class="content-top">
+                <h3>Contact</h3>
+                <ul>
+                    <li>
+                        <i class="fa-solid fa-phone"></i>
+                        <a href="tel:+1234567890">+1234567890</a>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-envelope"></i>
+                        <a href="#">info@hotmail.com</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let hamburger = document.querySelector(".hamburger");
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector(".close-btn button");
+
+        hamburger.addEventListener("click", () => {
+            sidebar.classList.toggle("show");
+        });
+
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.remove("show");
+        });
+
+        /*** Variables */
+        const signupButton = document.getElementById("signup-button"),
+            loginButton = document.getElementById("login-button"),
+            userForms = document.getElementById("user_options-forms");
+
+        /* Add event listener to the "Sign Up" button */
+        signupButton.addEventListener(
+            "click",
+            () => {
+                userForms.classList.remove("bounceRight");
+                userForms.classList.add("bounceLeft");
+            },
+            false
+        );
+
+        /*** Add event listener to the "Login" button */
+        loginButton.addEventListener(
+            "click",
+            () => {
+                userForms.classList.remove("bounceLeft");
+                userForms.classList.add("bounceRight");
+            },
+            false
+        );
+
+        function validateForm() {
+            const contact = document.getElementById("contact").value.trim();
+            const contactPattern = /^[6-9]\d{9}$/; // starts with 6-9 and has total 10 digits
+
+            if (!contactPattern.test(contact)) {
+                alert("Please enter a valid 10-digit Indian mobile number.");
+                return false;
+            }
+
+            return true;
+        }   
+    </script>
+
+</body>
+
+</html>

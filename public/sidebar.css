@@ -1,0 +1,125 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 330px;
+  height: 100%;
+  background-color: #ffffff;
+  color: #333;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: right ease-in-out 0.1s;
+}
+
+.show{
+  right: 0;
+}
+
+/* --- CLOSE BUTTON --- */
+.sidebar .close-btn {
+  border: none;
+  background: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: #333;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.sidebar .close-btn i {
+  font-size: 22px;
+  color: #333;
+}
+
+.sidebar .close-btn:hover {
+  color: chocolate;
+}
+
+/* --- PAGES SECTION --- */
+.sidebar .pages {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+}
+
+.sidebar .pages ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar .pages ul li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar .pages ul li:hover {
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+
+.pages ul li i {
+  font-size: 22px;
+  color: chocolate;
+  margin-left: 0.5rem;
+}
+
+.pages ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+  flex: 1;
+  margin-left: 0.5rem;
+  padding: 0.3rem 0;
+}
+
+/* --- CONTACT SECTION --- */
+.contact {
+  padding-top: 2rem;
+  border-top: 1px solid #ddd;
+}
+
+.contact h3 {
+  font-size: 18px;
+  color: chocolate;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.contact ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.contact ul li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 14px;
+}
+
+.contact ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.contact ul li a:hover {
+  color: chocolate;
+}

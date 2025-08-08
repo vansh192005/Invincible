@@ -26,7 +26,7 @@ nav {
   margin: auto;
   align-items: center;
   background: transparent;
-  max-width: 80%;
+  max-width: 76%;
   padding: 0 1.5rem;
   box-sizing: border-box;
   justify-content: space-between;
@@ -218,11 +218,11 @@ h3 {
 }
 
 .hero-content {
-  width: 40%;
+  max-width: 40%;
   /* border: 2px solid white; */
   position: relative;
   top: 9rem;
-  left: 12.2rem;
+  left: 13.5rem;
   z-index: 2;
   color: white;
   text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
@@ -312,7 +312,7 @@ h3 {
 }
 
 .bottom-content{
-  margin-top: 4rem;
+  margin-top: 3rem;
   display: flex;
   flex-direction: column;
 }
@@ -455,6 +455,9 @@ h3 {
 
 /* Highlighted-events responsiveness */
 @media(max-width:768px){
+  .highlighted-events-section{
+    width: 90%;
+  }
   .highlighted-events-section, .weekend-events-section{
     margin: auto;
   }
@@ -487,7 +490,7 @@ h3 {
   color: chocolate;
   font-size: 1.8rem;
   letter-spacing: 0.1rem;
-  margin-left: 11.6rem;
+  margin-left: 13.2rem;
 }
 
 .weekend-events-container{
@@ -495,7 +498,7 @@ h3 {
   flex-wrap: nowrap;
   overflow-x: auto;
   gap: 1rem;
-  width: 75%;
+  width: 72%;
   margin: auto;
   padding: 1rem 0;
 }
@@ -540,7 +543,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   overflow-x: auto;
-  gap: 2rem;
+  gap: 3rem;
   padding: 1rem 0;
   /* justify-content: center; */
   align-items: center;
@@ -548,10 +551,11 @@ h3 {
 
 .testimonial-card{
   border-radius: 0.5rem;
-  height: 36vh;
-  max-width: 21vw;
+  height: 50vh;
+  width: 30%;
   background-color: #f2f2f2;
   padding: 1rem;
+  overflow: auto;
 }
 
 .testimonial-card h3{
@@ -563,7 +567,7 @@ h3 {
 .testimonial-card p {
   font-size: 0.9rem;
   color: #484848;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   letter-spacing: 1px;
 }
 
@@ -592,13 +596,14 @@ h3 {
   font-size: 16px;
   padding: 40px 0 0 0;
   position: relative;
+  margin-top: 3rem;
 }
 
 .footer-container {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  max-width: 1200px;
+  max-width: 1150px;
   margin: 0 auto;
   padding: 0 32px;
 }

@@ -165,7 +165,7 @@
     </footer>
 
 
-    <!-- Sidebar -->
+    Sidebar
     <div class="sidebar">
         <div class="close-btn">
             <button>
@@ -186,14 +186,21 @@
                     <i class="fa-solid fa-mountain-sun"></i>
                     <a href="/events">Events</a>
                 </li>
-                <!-- <li>
-                    <i class="fa-regular fa-user"></i>
-                    <a href="/profile">Profile</a>
-                </li> -->
-                <li>
-                    <i class="fa-regular fa-user"></i>
-                    <a href="/login">Login</a>
-                </li>
+                <% if (user) { %>
+                    <li>
+                        <i class="fa-regular fa-user"></i>
+                        <a href="/profile">Profile</a>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <a href="/logout">Logout</a>
+                    </li>
+                    <% } else { %>
+                        <li>
+                            <i class="fa-regular fa-user"></i>
+                            <a href="/register">Signup/Login</a>
+                        </li>
+                        <% } %>
             </ul>
         </div>
         <div class="contact">
