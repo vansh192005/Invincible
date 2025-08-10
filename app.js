@@ -111,44 +111,50 @@ app.get("/about", (req, res) => {
 });
 
 // Add Event
-app.post('/events', (req, res) => {
+// Insert Event
+app.post('/events', async (req, res) => {
   const { title, image, description, price, duration } = req.body;
-  db.query(
-    'INSERT INTO events_summary (title, image, description, price, duration) VALUES (?, ?, ?, ?, ?)',
-    [title, image, description, price, duration],
-    (err, result) => {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json({ id: result.insertId, ...req.body });
-    }
-  );
+  try {
+    const [result] = await db.query(
+      'INSERT INTO events_summary (title, image, description, price, duration) VALUES (?, ?, ?, ?, ?)',
+      [title, image, description, price, duration]
+    );
+    res.json({ id: result.insertId, ...req.body });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Get All Events
-app.get('/events', (req, res) => {
-  db.query('SELECT * FROM events_summary', (err, results) => {
-    if (err) {
-      return res.status(500).send('Database error: ' + err.message);
-    }
-    // Render events.ejs ko, aur usko events data pass kar do
+app.get('/events', async (req, res) => {
+  try {
+    const [results] = await db.query('SELECT * FROM events_summary');
     res.render('events', { events: results });
-  });
+  } catch (err) {
+    res.status(500).send('Database error: ' + err.message);
+  }
 });
-
 
 // Event Details Page
-app.get('/events/:title', (req, res) => {
+app.get('/events/:title', async (req, res) => {
   const eventTitle = req.params.title;
-  // Jo encodeURIComponent se aya vo decode karo (optional)
   const decodedTitle = decodeURIComponent(eventTitle);
 
-  db.query('SELECT * FROM events WHERE title = ?', [decodedTitle], (err, results) => {
-    if (err) return res.status(500).send('Database error: ' + err.message);
-    if (results.length === 0) return res.status(404).send('Event not found');
+  try {
+    const [results] = await db.query(
+      'SELECT * FROM events WHERE title = ?',
+      [decodedTitle]
+    );
+
+    if (results.length === 0) {
+      return res.status(404).send('Event not found');
+    }
 
     res.render('eventDetails', { event: results[0] });
-  });
+  } catch (err) {
+    res.status(500).send('Database error: ' + err.message);
+  }
 });
-
 
 
 // 🚪 Logout

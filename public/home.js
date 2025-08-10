@@ -1,8 +1,5 @@
 // Header, sidebar, and hero-section functionality
 // This script handles the sidebar toggle, background image sliding, and typed text effect
-let hamburger = document.querySelector('.hamburger');
-let sidebar = document.querySelector('.sidebar');
-let closeBtn = document.querySelector('.close-btn button');
 let heroSection = document.querySelector('.hero-section');
 
 let imageArr = [
@@ -12,13 +9,6 @@ let imageArr = [
     '/images/hero-section/dessert.jpg'
 ];
 
-hamburger.addEventListener('click', () => {
-    sidebar.classList.toggle('show');
-});
-
-closeBtn.addEventListener('click', () => {
-    sidebar.classList.remove('show');
-})
 
 // Change background image every 5 seconds
 let currentIndex = 0;

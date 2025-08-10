@@ -1,8 +1,3 @@
-// Sidebar Toggle Functionality
-let hamburger = document.querySelector('.hamburger');
-let sidebar = document.querySelector('.sidebar');
-let closeBtn = document.querySelector('.close-btn button');
-
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         const r = Math.random() * 16 | 0,
@@ -11,15 +6,6 @@ function uuidv4() {
     });
 }
 
-
-
-hamburger.addEventListener('click', () => {
-    sidebar.classList.toggle('show');
-});
-
-closeBtn.addEventListener('click', () => {
-    sidebar.classList.remove('show');
-})
 
 // Event Card
 let eventList = document.querySelector('.event-list');

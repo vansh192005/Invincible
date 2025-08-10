@@ -588,6 +588,22 @@ h3 {
   }
 }
 
+@media(min-width: 769px){
+  .testimonials-section {
+    width: 90%;
+    margin: auto;
+  }
+  .testimonials-section h1 {
+    font-size: 1.8rem;
+    margin-left: 0;
+    text-align: center;
+  }
+  .testimonials-container .testimonial-card {
+    max-width: 90%;
+    height: auto;
+  }
+}
+
 /* footer */
 
 .site-footer {

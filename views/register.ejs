@@ -104,65 +104,9 @@
     </section>
 
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="close-btn">
-            <button>
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-        <div class="pages">
-            <ul>
-                <li>
-                    <i class="fa-regular fa-house"></i>
-                    <a href="/">Home</a>
-                </li>
-                <li>
-                    <i class="fa-regular fa-building"></i>
-                    <a href="/about">About</a>
-                </li>
-                <li>
-                    <i class="fa-solid fa-mountain-sun"></i>
-                    <a href="/events">Events</a>
-                </li>
-                <!-- <li>
-                    <i class="fa-regular fa-user"></i>
-                    <a href="/profile">Profile</a>
-                </li> -->
-                <li>
-                    <i class="fa-regular fa-user"></i>
-                    <a href="/login">Login</a>
-                </li>
-            </ul>
-        </div>
-        <div class="contact">
-            <div class="content-top">
-                <h3>Contact</h3>
-                <ul>
-                    <li>
-                        <i class="fa-solid fa-phone"></i>
-                        <a href="tel:+1234567890">+1234567890</a>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-envelope"></i>
-                        <a href="#">info@hotmail.com</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <%- include("partials/sidebar") %>
 
     <script>
-        let hamburger = document.querySelector(".hamburger");
-        let sidebar = document.querySelector(".sidebar");
-        let closeBtn = document.querySelector(".close-btn button");
-
-        hamburger.addEventListener("click", () => {
-            sidebar.classList.toggle("show");
-        });
-
-        closeBtn.addEventListener("click", () => {
-            sidebar.classList.remove("show");
-        });
 
         /*** Variables */
         const signupButton = document.getElementById("signup-button"),

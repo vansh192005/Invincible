@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <header>
+        <nav>
+            <h3>INVINCIBLE</h3>
+            <button class="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav>
+        <div class="hero-section">
+            <h1>Welcome <%= user.username %>
+            </h1>
+            <p>Treks for which you have registered</p>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <%- include("partials/sidebar") %>
+
+        <main>
+            <div class="event-container">
+                <div class="event-card">
+                    <div class="trek-description">
+                        <!-- trek title -->
+                        <h3>Excursion to Spiti Valley</h3>
+                        <!-- trek location -->
+                        <p>Ahmedabad </p>
+                        <!-- trek date -->
+                        <p>Aug 16, 2025 to Aug 27, 2025</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+</body>
+
+</html>
