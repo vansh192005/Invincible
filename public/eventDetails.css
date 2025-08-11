@@ -20,7 +20,7 @@ header {
   max-width: 100%;
   height: 55vh;
   background-size: cover;
-  background-position: top;
+  background-position: center;
   z-index: 1;
 }
 
@@ -31,7 +31,7 @@ header .overlay {
   height: 100%;
   width: 100%;
   background-size: cover;
-  background-position: top;
+  background-position: center;
   background-repeat: no-repeat;
   z-index: 0;
   opacity: 0.9;
@@ -94,138 +94,7 @@ h3 {
   }
 }
 
-/* Sidebar */
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 330px;
-  height: 100%;
-  background-color: #ffffff;
-  color: #333;
-  padding: 2rem 1.5rem;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  box-shadow: -2px 0 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  transition: right ease-in-out 0.1s;
-}
 
-.show {
-  right: 0;
-}
-
-/* --- CLOSE BUTTON --- */
-.sidebar .close-btn {
-  border: none;
-  background: none;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  color: #333;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-.sidebar .close-btn i {
-  font-size: 22px;
-  color: #333;
-}
-
-.sidebar .close-btn:hover {
-  color: chocolate;
-}
-
-/* --- PAGES SECTION --- */
-.sidebar .pages {
-  display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
-}
-
-.sidebar .pages ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar .pages ul li {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  padding: 0.4rem 0;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.sidebar .pages ul li:hover {
-  background-color: #f2f2f2;
-  border-radius: 8px;
-}
-
-.pages ul li i {
-  font-size: 22px;
-  color: chocolate;
-  margin-left: 0.5rem;
-}
-
-.pages ul li a {
-  text-decoration: none;
-  color: #000;
-  font-size: 18px;
-  flex: 1;
-  margin-left: 0.5rem;
-  padding: 0.3rem 0;
-}
-
-/* --- CONTACT SECTION --- */
-.contact {
-  padding-top: 2rem;
-  border-top: 1px solid #ddd;
-}
-
-.contact h3 {
-  font-size: 18px;
-  color: chocolate;
-  font-weight: 500;
-  margin-bottom: 1rem;
-}
-
-.contact ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.contact ul li {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 14px;
-}
-
-.contact ul li a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 400;
-  transition: color 0.2s ease;
-}
-
-.contact ul li a:hover {
-  color: chocolate;
-}
-
-@media (max-width: 768px) {
-  nav {
-    max-width: 100%;
-  }
-}
 
 /* Main details */
 main {
@@ -668,3 +537,174 @@ main {
     padding: 12px 6px;
   }
 }
+
+/* Modal background */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal Background */
+.modal {
+  display: none; /* hidden by default */
+  position: fixed;
+  z-index: 1000;
+  padding-top: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal content */
+.modal-content {
+  background: #fff;
+  margin: 3% auto;
+  padding: 25px 30px;
+  width: 50%;
+  border-radius: 12px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+  font-family: Arial, sans-serif;
+}
+
+.modal-content h2 {
+  color: chocolate;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Close Button */
+.close-btn {
+  float: right;
+  cursor: pointer;
+  font-size: 24px;
+  color: #888;
+  transition: 0.2s;
+}
+
+.close-btn:hover {
+  color: #c9481a;
+}
+
+/* Participant Buttons */
+.participants-selector {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.participants-selector label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.participants-selector button {
+  margin: 5px;
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.participants-selector button:hover {
+  border-color: chocolate;
+}
+
+.participants-selector button.active {
+  background: chocolate;
+  color: white;
+  border-color: chocolate;
+}
+
+/* Participant Form Fields */
+#participantsForms {
+  margin-top: 15px;
+}
+
+#participantsForms h3 {
+  margin-top: 1.8rem; /* spacing above headings */
+  margin-bottom: 12px; /* spacing below heading */
+  color: chocolate;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+#participantsForms label {
+  display: block;
+  margin-bottom: 6px; /* spacing between label and input */
+  margin-top: 8px; /* spacing above label */
+  font-weight: 500;
+  color: black;
+}
+
+#participantsForms input,
+#participantsForms select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 15px; /* space between inputs */
+  outline: none;
+  transition: 0.3s;
+  background: #fafafa;
+}
+
+#participantsForm select option:hover{
+  background-color: chocolate;
+}
+
+#participantsForms input:focus,
+#participantsForms select:focus {
+  border-color: chocolate;
+  box-shadow: 0 0 6px rgba(210, 105, 30, 0.3);
+  background: #fff;
+}
+
+/* Submit Button */
+#submitBooking {
+  width: 100%;
+  padding: 12px;
+  background: chocolate;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#submitBooking:hover {
+  background: #b25a28;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+}
+
+
+/* Form styling */
+

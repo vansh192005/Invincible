@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invincible</title>
-    <link rel="stylesheet" href="/eventDetails.css">
+    <link rel="stylesheet" href="/eventDetails.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
         integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,9 +20,7 @@
                 <i class="fa-solid fa-bars"></i>
             </button>
         </nav>
-        <div class="hero-section">
-
-        </div>
+        <div class="hero-section"></div>
     </header>
 
     <main>
@@ -103,16 +101,34 @@
             </div>
             <button class="book-now-btn">Book Now</button>
         </div>
-
     </main>
-    <!-- Footer Section -->
 
+    <!-- Modal -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Registration</h2>
 
+            <!-- Participants Selector -->
+            <div class="participants-selector">
+                <label>Select Participants:</label>
+                <div id="participantsButtons"></div>
+            </div>
 
-    <!-- Sidebar -->
-    <%- include("partials/sidebar") %>
+            <!-- Participants Forms -->
+            <div id="participantsForms"></div>
 
-        <script src="/eventDetails.js"></script>
+            <button id="submitBooking">Submit</button>
+        </div>
+    </div>
+
+        <!-- Footer Section -->
+        <%- include("partials/footer") %>
+
+            <!-- Sidebar -->
+            <%- include("partials/sidebar") %>
+
+                <script src="/eventDetails.js"></script>
 </body>
 
 </html>

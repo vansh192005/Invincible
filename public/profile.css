@@ -108,7 +108,7 @@ h3 {
 
 .trek-description {
   padding: 1.2rem;
-  background-color: #f8f8f8 !important;
+  background-color: #f0eeee !important;
 }
 
 .trek-description h3 {
@@ -125,4 +125,14 @@ p {
   color: #717171 !important;
   line-height: 24px;
   letter-spacing: 1px;
+}
+
+.user-details{
+  padding: 1.2rem;
+}
+
+.user-details h3{
+  color: chocolate;
+  font-size: 20px;
+  font-weight: 400;
 }

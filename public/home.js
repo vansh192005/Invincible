@@ -119,7 +119,7 @@ highlightedEvents.forEach(event => {
 
 
 // Weekend events section
-const weekendEventsContainer = document.querySelector('.weekend-events-container');
+const weekendEventsCards = document.querySelector('.weekend-events-cards');
 let weekendEvents = [
     { image: "/images/Weekend/bakor.jpg" },
     { image: "/images/Weekend/dangs.jpg" },
@@ -147,5 +147,5 @@ weekendEvents.forEach(event => {
     heading.style.textShadow = '1px 1px 5px black';
 
     eventcard.appendChild(heading);
-    weekendEventsContainer.appendChild(eventcard);
+    weekendEventsCards.appendChild(eventcard);
 });
