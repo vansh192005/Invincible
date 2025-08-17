@@ -550,7 +550,7 @@ main {
 
 /* Modal Background */
 .modal {
-  display: none; /* hidden by default */
+  display: none;
   position: fixed;
   z-index: 1000;
   padding-top: 50px;
@@ -568,10 +568,12 @@ main {
   margin: 3% auto;
   padding: 25px 30px;
   width: 50%;
+  max-height: 80vh;
   border-radius: 12px;
   box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease-in-out;
   font-family: Arial, sans-serif;
+  overflow-y: auto;
 }
 
 .modal-content h2 {
@@ -685,6 +687,7 @@ main {
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s;
+  margin-top: 10px;
 }
 
 #submitBooking:hover {

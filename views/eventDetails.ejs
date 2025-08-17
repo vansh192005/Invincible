@@ -110,25 +110,27 @@
             <h2>Registration</h2>
 
             <!-- Participants Selector -->
-            <div class="participants-selector">
-                <label>Select Participants:</label>
-                <div id="participantsButtons"></div>
-            </div>
+            <form id="bookingForm" action="/book-event" method="POST">
+                <input type="hidden" name="event_id" value="<%= event.event_id %>" />
+                <div class="participants-selector">
+                    <label>Select Participants:</label>
+                    <div id="participantsButtons"></div>
+                </div>
 
-            <!-- Participants Forms -->
-            <div id="participantsForms"></div>
+                <div id="participantsForms"></div>
 
-            <button id="submitBooking">Submit</button>
+                <button id="submitBooking" type="submit">Submit</button>
+            </form>
         </div>
     </div>
 
-        <!-- Footer Section -->
-        <%- include("partials/footer") %>
+    <!-- Footer Section -->
+    <%- include("partials/footer") %>
 
-            <!-- Sidebar -->
-            <%- include("partials/sidebar") %>
+        <!-- Sidebar -->
+        <%- include("partials/sidebar") %>
 
-                <script src="/eventDetails.js"></script>
+            <script src="/eventDetails.js"></script>
 </body>
 
 </html>
