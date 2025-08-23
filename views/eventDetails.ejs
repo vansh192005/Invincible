@@ -99,7 +99,10 @@
                     <p>Backup Vehicle</p>
                 </div>
             </div>
-            <button class="book-now-btn">Book Now</button>
+            <!-- <button class="book-now-btn">Book Now</button> -->
+            <button class="book-now-btn" data-event-id="<%= event.event_id %>" data-age-group="<%= event.age_group %>">
+                Book Now
+            </button>
         </div>
     </main>
 
@@ -111,7 +114,7 @@
 
             <!-- Participants Selector -->
             <form id="bookingForm" action="/book-event" method="POST">
-                <input type="hidden" name="event_id" value="<%= event.event_id %>" />
+                <input type="hidden" id = "event_id" name="event_id" value="<%= event.event_id %>" />
                 <div class="participants-selector">
                     <label>Select Participants:</label>
                     <div id="participantsButtons"></div>

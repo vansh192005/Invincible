@@ -5,6 +5,7 @@ const path = require("path");
 const db = require('./database/eventDb');
 const crypto = require("crypto");
 // const { v4: uuidv4 } = require("uuid");
+const methodOverride = require("method-override");
 
 // 🔹 User-defined UUID v4 function
 function generateUUID() {
@@ -21,7 +22,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 
+
+
 // 🔧 Middlewares
+app.use(methodOverride("_method"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -40,7 +44,7 @@ function requireLogin(req, res, next) {
     if (req.headers.accept && req.headers.accept.includes("application/json")) {
       return res.status(401).json({ error: "Please login to book" });
     }
-    return res.redirect("/register"); 
+    return res.redirect("/register");
   }
   next();
 }
@@ -49,7 +53,7 @@ function requireLogin(req, res, next) {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use((req, res, next) => {
-  res.locals.user = req.session.user || null; 
+  res.locals.user = req.session.user || null;
   next();
 });
 
@@ -108,9 +112,9 @@ app.post("/login", async (req, res) => {
       return res.send("❌ Invalid password");
     }
 
-    req.session.user = { 
+    req.session.user = {
       user_id: user.user_id,
-      username: user.user_name 
+      username: user.user_name
     };
 
     res.redirect("/");
@@ -144,7 +148,7 @@ app.get("/profile", async (req, res) => {
     // Har booking ke participants bhi nikal lo
     for (let booking of bookings) {
       const [participants] = await db.query(
-        "SELECT first_name, last_name, gender, birthdate, phone FROM booking_participants WHERE booking_id = ?",
+        "SELECT participant_id, first_name, last_name, gender, birthdate, phone FROM booking_participants WHERE booking_id = ?",
         [booking.booking_id]
       );
       booking.participants = participants;
@@ -286,6 +290,41 @@ app.post("/book-event", async (req, res) => {
     res.status(500).send("Database error: " + err.message);
   }
 });
+
+  // UPDATING BOOKINGS
+
+  app.patch("/update-booking/:booking_id", (req, res) => {
+    const { participantId, firstName, lastName, phone, birthdate, gender } = req.body;
+
+    // Loop through all participants
+    const updates = participantId.map((id, i) => {
+      return new Promise((resolve, reject) => {
+        const sql = `
+        UPDATE booking_participants 
+        SET first_name = ?, last_name = ?, phone = ?, birthdate = ?, gender = ?
+        WHERE participant_id = ?
+      `;
+        db.query(sql, [
+          firstName[i],
+          lastName[i],
+          phone[i],
+          birthdate[i],
+          gender[i],
+          id
+        ], (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        });
+      });
+    });
+
+    Promise.all(updates)
+      .then(() => res.redirect("/profile")) // update ke baad redirect
+      .catch(err => {
+        console.error(err);
+        res.status(500).send("Error updating participants");
+      });
+  });
 
 
 

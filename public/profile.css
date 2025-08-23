@@ -183,3 +183,201 @@ p {
 }
 
 /* Update Form */
+/* update-form.css */
+
+/* Modal background */
+#updateBookingModal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Modal content box */
+#updateBookingModal .modal-content {
+  background: #fff;
+  margin: 60px auto;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Close button */
+#updateBookingModal .close-btn {
+  float: right;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #555;
+}
+#updateBookingModal .close-btn:hover {
+  color: #000;
+}
+
+/* Heading */
+#updateBookingModal h2 {
+  color: chocolate;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Form labels */
+#updateBookingModal label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+.participant-form h3{
+  margin-top: 1.8rem; 
+  margin-bottom: 12px; 
+  color: chocolate;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+/* Input fields */
+#updateBookingModal input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+#updateBookingModal input:focus {
+  border-color: #d35400;
+  box-shadow: 0 0 4px rgba(211, 84, 0, 0.3);
+}
+
+/* ==== Participant Buttons Section ==== */
+.participants-selector {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.participants-selector label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+#participantsForms input,
+#participantsForms select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 15px; /* space between inputs */
+  outline: none;
+  transition: 0.3s;
+  background: #fafafa;
+}
+
+#updateParticipantsButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+  justify-content: center; /* center align buttons */
+}
+
+#updateParticipantsButtons button {
+  background: #d35400;
+  color: #fff;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+#updateParticipantsButtons button:hover {
+  background: #e67e22;
+}
+
+#updateParticipantsButtons button.active {
+  background: #e67e22;
+  font-weight: bold;
+}
+
+/* Action Buttons (Update/Cancel) */
+#updateBookingModal .action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#updateBookingModal .btn-update {
+  background: #d35400;
+  color: #fff;
+  flex: 1;
+  margin-right: 10px;
+}
+
+#updateBookingModal .btn-update:hover {
+  background: #e67e22;
+}
+
+#updateBookingModal .btn-cancel {
+  background: #ccc;
+  color: #333;
+  flex: 1;
+}
+
+#updateBookingModal .btn-cancel:hover {
+  background: #999;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+/* Submit Button */
+#updateSubmitBtn {
+  width: 100%;
+  padding: 12px;
+  background: chocolate;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+#updateSubmitBtn:hover {
+  background: #b25a28;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
