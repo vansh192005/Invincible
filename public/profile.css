@@ -376,6 +376,10 @@ p {
   background: #b25a28;
 }
 
+.participant-form hr{
+  margin-top: 1rem;
+}
+
 /* Animation */
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.95); }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/admin_panel.css">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>You are now on admin page</h2>
+    <button id="addEventBtn" class="addBtn">Add Event</button>
+    <button id="addEventDetailsBtn" class="addBtn">Add Event Details</button>
+
+    <!-- Add Event Summary Form -->
+    <form class="form" id="eventForm" method="POST" action="/newEvent_summary" enctype="multipart/form-data">
+        <span class="close-btn">&times;</span>
+        <div class="form-content">
+            <h2>Enter Event Summary</h2>
+            <label>Event Title: </label>
+            <input type="text" name="event_title">
+            <label>Event Image: </label>
+            <input type="file" name="image">
+            <label>Event Description: </label>
+            <input type="text" name="event_description">
+            <button id="submitEventBtn" class ="submitBtn" type="submit">Submit</button> 
+        </div>
+    </form>
+
+    <!-- Add Event Details Form -->
+     <form class="form" id="eventDetailsForm" method="POST" action="/newEvent_details" enctype="multipart/form-data">
+        <span class="close-btn">&times;</span>
+        <div class="form-content">
+            <h2>Enter Event Details</h2>
+            <label>Event Title: </label>
+            <input type="text" name="eventDetails_title">
+
+            <label>Event Tagline: </label>
+            <input type="text" name="eventDetails_tagline">
+
+            <label>Image: </label>
+            <input type="file" name="eventDetails_image">
+
+            <label>Event Duration: </label>
+            <input type="text" name="eventDetails_duration">
+
+            <label>Event Difficulty: </label>
+            <input type="text" name="eventDetails_difficulty">
+            
+            <label>Age Group: </label>
+            <input type="text" name="eventDetails_ageGroup">
+            
+            <label>Altitude: </label>
+            <input type="text" name="eventDetails_altitude">
+            
+            <label>Price: </label>
+            <input type="text" name="eventDetails_price">
+            
+            <label>Event Description: </label>
+            <input type="text" name="eventDetails_desc">
+            
+            <label>Event Date: </label>
+            <input type="date" name="eventDetails_date">
+
+            <button id="submitEventDetailsBtn" class ="submitBtn" type="submit">Submit Event</button> 
+        </div>
+    </form>
+
+    <script src="admin_panel.js"></script>
+</body>
+</html>

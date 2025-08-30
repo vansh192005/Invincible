@@ -2,15 +2,17 @@ const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcryptjs");
 const path = require("path");
-const db = require('./database/eventDb');
+const db = require("./database/eventDb");
 const crypto = require("crypto");
 // const { v4: uuidv4 } = require("uuid");
 const methodOverride = require("method-override");
+const multer = require("multer");
+const cors = require("cors"); // CORS Setup
 
 // 🔹 User-defined UUID v4 function
 function generateUUID() {
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-    (c ^ crypto.randomBytes(1)[0] & 15 >> c / 4).toString(16)
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
+    (c ^ (crypto.randomBytes(1)[0] & (15 >> (c / 4)))).toString(16)
   );
 }
 
@@ -21,23 +23,35 @@ const app = express();
 // const port = 3000;
 const port = process.env.PORT || 3000;
 
-
-
+// Multer setup for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images/Events"); // jaha store karna hai
+  },
+  filename: (req, file, cb) => {
+    // Date.now() + original file extension add karo
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+const upload = multer({ storage });
 
 // 🔧 Middlewares
+app.use(cors());
 app.use(methodOverride("_method"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
-  secret: "super-secret-key",
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production" ? true : false, // localhost pe false
-    sameSite: "lax"
-  }
-}));
+app.use(
+  session({
+    secret: "super-secret-key",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production" ? true : false, // localhost pe false
+      sameSite: "lax",
+    },
+  })
+);
 
 function requireLogin(req, res, next) {
   if (!req.session || !req.session.user || !req.session.user.user_id) {
@@ -81,7 +95,7 @@ app.post("/signup", async (req, res) => {
   const user_id = generateUUID();
 
   db.query(
-    'INSERT INTO users (user_id, user_name, email, contact, password) VALUES (?, ?, ?, ?, ?)',
+    "INSERT INTO users (user_id, user_name, email, contact, password) VALUES (?, ?, ?, ?, ?)",
     [user_id, username, email, contact, hashedPassword],
     (err, result) => {
       if (err) return res.status(500).json({ error: err.message });
@@ -98,7 +112,9 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const [rows] = await db.query('SELECT * FROM users WHERE user_name = ?', [username]);
+    const [rows] = await db.query("SELECT * FROM users WHERE user_name = ?", [
+      username,
+    ]);
 
     if (rows.length === 0) {
       return res.send("❌ User not found");
@@ -114,7 +130,7 @@ app.post("/login", async (req, res) => {
 
     req.session.user = {
       user_id: user.user_id,
-      username: user.user_name
+      username: user.user_name,
     };
 
     res.redirect("/");
@@ -161,7 +177,6 @@ app.get("/profile", async (req, res) => {
   }
 });
 
-
 // 🗺️ About Page
 app.get("/about", (req, res) => {
   res.render("about");
@@ -169,11 +184,11 @@ app.get("/about", (req, res) => {
 
 // Add Event
 // Insert Event
-app.post('/events', async (req, res) => {
+app.post("/events", async (req, res) => {
   const { title, image, description, price, duration } = req.body;
   try {
     const [result] = await db.query(
-      'INSERT INTO events_summary (title, image, description, price, duration) VALUES (?, ?, ?, ?, ?)',
+      "INSERT INTO events_summary (title, image, description, price, duration) VALUES (?, ?, ?, ?, ?)",
       [title, image, description, price, duration]
     );
     res.json({ id: result.insertId, ...req.body });
@@ -183,33 +198,32 @@ app.post('/events', async (req, res) => {
 });
 
 // Get All Events
-app.get('/events', async (req, res) => {
+app.get("/events", async (req, res) => {
   try {
-    const [results] = await db.query('SELECT * FROM events_summary');
-    res.render('events', { events: results });
+    const [results] = await db.query("SELECT * FROM events_summary");
+    res.render("events", { events: results });
   } catch (err) {
-    res.status(500).send('Database error: ' + err.message);
+    res.status(500).send("Database error: " + err.message);
   }
 });
 
 // Event Details Page
-app.get('/events/:title', async (req, res) => {
+app.get("/events/:title", async (req, res) => {
   const eventTitle = req.params.title;
   const decodedTitle = decodeURIComponent(eventTitle);
 
   try {
-    const [results] = await db.query(
-      'SELECT * FROM events WHERE title = ?',
-      [decodedTitle]
-    );
+    const [results] = await db.query("SELECT * FROM events WHERE title = ?", [
+      decodedTitle,
+    ]);
 
     if (results.length === 0) {
-      return res.status(404).send('Event not found');
+      return res.status(404).send("Event not found");
     }
     console.log(results[0]);
-    res.render('eventDetails', { event: results[0] });
+    res.render("eventDetails", { event: results[0] });
   } catch (err) {
-    res.status(500).send('Database error: ' + err.message);
+    res.status(500).send("Database error: " + err.message);
   }
 });
 
@@ -219,8 +233,7 @@ app.post("/book-event", async (req, res) => {
     return res.status(401).send("Please login to book an event.");
   }
 
-   const { event_id, firstName, lastName, phone, birthdate, gender } = req.body;
-
+  const { event_id, firstName, lastName, phone, birthdate, gender } = req.body;
 
   const participants = [];
   if (firstName && Array.isArray(firstName)) {
@@ -234,7 +247,7 @@ app.post("/book-event", async (req, res) => {
       });
     }
   }
-   if (!participants || participants.length === 0) {
+  if (!participants || participants.length === 0) {
     return res.status(400).send("At least one participant is required.");
   }
 
@@ -277,13 +290,13 @@ app.post("/book-event", async (req, res) => {
             p.first_name,
             p.last_name,
             p.phone,
-            p.birthdate, 
-            p.gender,    
+            p.birthdate,
+            p.gender,
           ]
         );
       }
     }
-    
+
     res.redirect("/profile");
   } catch (err) {
     console.error("Booking error:", err);
@@ -291,46 +304,61 @@ app.post("/book-event", async (req, res) => {
   }
 });
 
-  // UPDATING BOOKINGS
+// UPDATING BOOKINGS
 
-  app.patch("/update-booking/:booking_id", (req, res) => {
+app.patch("/update-booking/:booking_id", async (req, res) => {
+  try {
     const { participantId, firstName, lastName, phone, birthdate, gender } = req.body;
 
-    // Loop through all participants
-    const updates = participantId.map((id, i) => {
-      return new Promise((resolve, reject) => {
-        const sql = `
+    for (let i = 0; i < participantId.length; i++) {
+      const sql = `
         UPDATE booking_participants 
         SET first_name = ?, last_name = ?, phone = ?, birthdate = ?, gender = ?
         WHERE participant_id = ?
       `;
-        db.query(sql, [
-          firstName[i],
-          lastName[i],
-          phone[i],
-          birthdate[i],
-          gender[i],
-          id
-        ], (err, result) => {
-          if (err) return reject(err);
-          resolve(result);
-        });
-      });
-    });
 
-    Promise.all(updates)
-      .then(() => res.redirect("/profile")) // update ke baad redirect
-      .catch(err => {
-        console.error(err);
-        res.status(500).send("Error updating participants");
-      });
-  });
+      await db.query(sql, [
+        firstName[i],
+        lastName[i],
+        phone[i],
+        birthdate[i],
+        gender[i],
+        participantId[i],
+      ]);
+    }
 
+    // ✅ update ke baad profile page par redirect
+    res.redirect("/profile");
+  } catch (err) {
+    console.error("❌ Error updating participants:", err);
+    res.status(500).send("Error updating participants");
+  }
+});
+
+// DELETE BOOKING
+app.delete("/delete-booking/:id", async (req, res) => {
+  try {
+    const bookingId = req.params.id;
+    const sql = "DELETE FROM bookings WHERE booking_id = ?";
+
+    const [result] = await db.query(sql, [bookingId]); // await query execution
+
+    if (result.affectedRows === 0) {
+      return res.status(404).send("Booking not found");
+    }
+
+    console.log("✅ Booking deleted:", result);
+    res.redirect("/profile"); // redirect back to profile dashboard
+  } catch (err) {
+    console.error("❌ Error deleting booking:", err);
+    res.status(500).send("Error deleting booking");
+  }
+});
 
 
 // 🚪 Logout
 app.get("/logout", (req, res) => {
-  req.session.destroy(err => {
+  req.session.destroy((err) => {
     if (err) {
       console.error("Logout error:", err);
       return res.send("❌ Error logging out");
@@ -344,6 +372,101 @@ app.get("/logout", (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+// ADMIN PANEL
+
+// Main admin panel page
+app.get("/admin_panel", (req, res) => {
+  res.render("admin_panel");
+});
+app.get("/admin_panel2", (req, res) => {
+  res.render("admin_panel2");
+});
+
+// Acception and storing event summary in db
+app.post("/newEvent_summary", upload.single("image"), (req, res) => {
+  const { event_title, event_description } = req.body;
+  const image = req.file; // multer ke through aayi file
+  console.log("Saved file:", image);
+
+  // Example: DB me path store karo
+  const relativePath = "images/Events/" + image.filename;
+  console.log("Store this in DB:", relativePath);
+
+  console.log("Event Title:", event_title);
+  console.log("Event Description:", event_description);
+  console.log("Image File:", relativePath);
+
+  // ✅ Insert query (events_summary table me)
+  const sql =
+    "INSERT INTO events_summary (title, image, description) VALUES (?, ?, ?)";
+  db.query(
+    sql,
+    [event_title, relativePath, event_description],
+    (err, result) => {
+      if (err) {
+        console.error("Error inserting event:", err);
+        return res.status(500).send("Database error");
+      }
+
+      console.log("Event inserted:", result);
+    }
+  );
+  res.send("Event saved successfully!");
+
+});
+
+// Add detailed event info
+app.post("/newEvent_details", upload.single("eventDetails_image"), async (req, res) => {
+  try {
+    console.log("REQ.BODY:", req.body);
+    console.log("REQ.FILE:", req.file);
+
+    const {
+      eventDetails_title,
+      eventDetails_tagline,
+      eventDetails_duration,
+      eventDetails_difficulty,
+      eventDetails_ageGroup,
+      eventDetails_altitude,
+      eventDetails_price,
+      eventDetails_desc,
+      eventDetails_date
+    } = req.body;
+
+    const imagePath = req.file ? "/images/Events/" + req.file.filename : null;
+
+    // ✅ Date format MySQL compatible (YYYY-MM-DD)
+    let eventDate = eventDetails_date ? new Date(eventDetails_date).toISOString().split("T")[0] : null;
+
+    const sql = `
+      INSERT INTO events 
+      (title, tagline, image, duration, difficulty, age_group, altitude, price, description, event_date) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    const [result] = await db.query(sql, [
+      eventDetails_title,
+      eventDetails_tagline,
+      imagePath,
+      eventDetails_duration,
+      eventDetails_difficulty,
+      eventDetails_ageGroup,
+      eventDetails_altitude,
+      eventDetails_price,
+      eventDetails_desc,
+      eventDate
+    ]);
+
+    console.log("✅ Event inserted:", result);
+    res.redirect("/"); // ✅ redirect after success
+  } catch (err) {
+    console.error("❌ SQL ERROR:", err.message);
+    res.status(500).send("Error saving event details.");
+  }
+});
+
+
 
 
 module.exports = app;
