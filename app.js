@@ -305,35 +305,56 @@ app.post("/book-event", async (req, res) => {
 });
 
 // UPDATING BOOKINGS
-
 app.patch("/update-booking/:booking_id", async (req, res) => {
+  const { participantId, firstName, lastName, phone, birthdate, gender } = req.body;
+  const bookingId = req.params.booking_id;
+
   try {
-    const { participantId, firstName, lastName, phone, birthdate, gender } = req.body;
+    // Loop for all participants
+    const updates = participantId.map((id, i) => {
+      return new Promise((resolve, reject) => {
+        if (id) {
+          // ==== UPDATE existing participant ====
+          const sqlUpdate = `
+            UPDATE booking_participants 
+            SET first_name = ?, last_name = ?, phone = ?, birthdate = ?, gender = ? 
+            WHERE participant_id = ?
+          `;
+          db.query(
+            sqlUpdate,
+            [firstName[i], lastName[i], phone[i], birthdate[i], gender[i], id],
+            (err, result) => {
+              if (err) return reject(err);
+              resolve(result);
+            }
+          );
+        } else {
+          // ==== INSERT new participant ====
+          const sqlInsert = `
+            INSERT INTO booking_participants 
+              (booking_id, first_name, last_name, phone, birthdate, gender) 
+            VALUES (?, ?, ?, ?, ?, ?)
+          `;
+          db.query(
+            sqlInsert,
+            [bookingId, firstName[i], lastName[i], phone[i], birthdate[i], gender[i]],
+            (err, result) => {
+              if (err) return reject(err);
+              resolve(result);
+            }
+          );
+        }
+      });
+    });
 
-    for (let i = 0; i < participantId.length; i++) {
-      const sql = `
-        UPDATE booking_participants 
-        SET first_name = ?, last_name = ?, phone = ?, birthdate = ?, gender = ?
-        WHERE participant_id = ?
-      `;
-
-      await db.query(sql, [
-        firstName[i],
-        lastName[i],
-        phone[i],
-        birthdate[i],
-        gender[i],
-        participantId[i],
-      ]);
-    }
-
-    // ✅ update ke baad profile page par redirect
-    res.redirect("/profile");
+    await Promise.all(updates);
+    res.redirect("/profile"); // update/insert ke baad redirect
   } catch (err) {
-    console.error("❌ Error updating participants:", err);
-    res.status(500).send("Error updating participants");
+    console.error(err);
+    res.status(500).send("Error updating/adding participants");
   }
 });
+
 
 // DELETE BOOKING
 app.delete("/delete-booking/:id", async (req, res) => {
