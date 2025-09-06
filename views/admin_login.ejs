@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Login</title>
+
+    <!-- Bootstrap 5.3 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- External Css -->
+    <link rel="stylesheet" href="admin_login.css">
+</head>
+
+<body>
+    <main class="login-card card shadow-lg border-0">
+        <div class="card-body p-4 p-md-5">
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <div class="brand-badge">
+                    <i class="bi bi-shield-lock-fill fs-4"></i>
+                </div>
+                <div>
+                    <h1 class="h4 mb-0">Admin Portal</h1>
+                    <small class="text-secondary">Sign in to manage your dashboard</small>
+                </div>
+                <div class="ms-auto">
+                    <button id="themeToggle" class="btn btn-outline-secondary btn-sm" type="button">
+                        <i class="bi bi-sun-fill d-none" id="icon-light"></i>
+                        <i class="bi bi-moon-stars-fill" id="icon-dark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Alert -->
+            <% if (typeof error !=="undefined" ) { %>
+                <div class="alert alert-danger" role="alert">
+                    <%= error %>
+                </div>
+                <% } %>
+
+                    <!-- Login Form -->
+                    <form id="loginForm" class="needs-validation" novalidate action="/admin_login" method="POST">
+                        <div class="mb-3">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="name@company.com" required />
+                                <label for="email">Email address</label>
+                                <div class="invalid-feedback">Please enter a valid email.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="input-group">
+                                <div class="form-floating flex-grow-1">
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        placeholder="Password" minlength="6" required />
+                                    <label for="password">Password</label>
+                                    <div class="invalid-feedback">Password must be at least 6 characters.</div>
+                                </div>
+                                <span class="input-group-text toggle-pass" id="togglePass" aria-label="Show password">
+                                    <i class="bi bi-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" id="remember"
+                                    name="remember" />
+                                <label class="form-check-label" for="remember">Remember me</label>
+                            </div>
+                            <a href="#" class="link-primary link-underline-opacity-0">Forgot password?</a>
+                        </div>
+
+                        <button class="btn btn-primary w-100 py-2" type="submit">
+                            <span class="me-2"><i class="bi bi-box-arrow-in-right"></i></span> Sign in
+                        </button>
+                    </form>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script>
+        // Year
+        // document.getElementById('year')?.textContent = new Date().getFullYear();
+
+        // Theme toggle
+        (function themeInit() {
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-bs-theme', saved);
+            }
+            updateThemeIcon();
+        })();
+
+        function updateThemeIcon() {
+            const theme = document.documentElement.getAttribute('data-bs-theme') || 'light';
+            document.getElementById('icon-light').classList.toggle('d-none', theme !== 'light');
+            document.getElementById('icon-dark').classList.toggle('d-none', theme !== 'dark');
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-bs-theme') || 'light';
+            const next = (current === 'light') ? 'dark' : 'light';   // ✅ correct comparison
+            html.setAttribute('data-bs-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon();
+        });
+
+
+        // Show/Hide Password
+        document.getElementById('togglePass').addEventListener('click', () => {
+            const input = document.getElementById('password');
+            const icon = document.querySelector('#togglePass i');
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            icon.classList.toggle('bi-eye');
+            icon.classList.toggle('bi-eye-slash');
+        });
+
+        // Form Validation
+        (function () {
+            const form = document.getElementById('loginForm');
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    form.classList.add('was-validated');
+                }
+            }, false);
+        })();
+    </script>
+
+
+</body>
+
+</html>

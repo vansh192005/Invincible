@@ -306,7 +306,8 @@ app.post("/book-event", async (req, res) => {
 
 // UPDATING BOOKINGS
 app.patch("/update-booking/:booking_id", async (req, res) => {
-  const { participantId, firstName, lastName, phone, birthdate, gender } = req.body;
+  const { participantId, firstName, lastName, phone, birthdate, gender } =
+    req.body;
   const bookingId = req.params.booking_id;
 
   try {
@@ -337,7 +338,14 @@ app.patch("/update-booking/:booking_id", async (req, res) => {
           `;
           db.query(
             sqlInsert,
-            [bookingId, firstName[i], lastName[i], phone[i], birthdate[i], gender[i]],
+            [
+              bookingId,
+              firstName[i],
+              lastName[i],
+              phone[i],
+              birthdate[i],
+              gender[i],
+            ],
             (err, result) => {
               if (err) return reject(err);
               resolve(result);
@@ -354,7 +362,6 @@ app.patch("/update-booking/:booking_id", async (req, res) => {
     res.status(500).send("Error updating/adding participants");
   }
 });
-
 
 // DELETE BOOKING
 app.delete("/delete-booking/:id", async (req, res) => {
@@ -376,8 +383,7 @@ app.delete("/delete-booking/:id", async (req, res) => {
   }
 });
 
-
-// 🚪 Logout
+//------------------------🚪 LOGOUT ---------------------------
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -394,14 +400,21 @@ app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-// ADMIN PANEL
+// ---------------------------ADMIN PANEL-------------------------------
 
 // Main admin panel page
-app.get("/admin_panel", (req, res) => {
-  res.render("admin_panel");
-});
-app.get("/admin_panel2", (req, res) => {
-  res.render("admin_panel2");
+app.get("/admin_panel", async (req, res) => {
+  const [users] = await db.query("SELECT COUNT(*) AS userCount FROM users");
+  const [events] = await db.query("SELECT COUNT(*) AS eventCount FROM events");
+  const [bookings] = await db.query(
+    "SELECT COUNT(*) AS bookingCount FROM bookings"
+  );
+
+  res.render("admin_panel", {
+    userCount: users[0].userCount,
+    eventCount: events[0].eventCount,
+    bookingCount: bookings[0].bookingCount,
+  });
 });
 
 // Acception and storing event summary in db
@@ -434,59 +447,120 @@ app.post("/newEvent_summary", upload.single("image"), (req, res) => {
     }
   );
   res.send("Event saved successfully!");
-
 });
 
 // Add detailed event info
-app.post("/newEvent_details", upload.single("eventDetails_image"), async (req, res) => {
-  try {
-    console.log("REQ.BODY:", req.body);
-    console.log("REQ.FILE:", req.file);
+app.post(
+  "/newEvent_details",
+  upload.single("eventDetails_image"),
+  async (req, res) => {
+    try {
+      console.log("REQ.BODY:", req.body);
+      console.log("REQ.FILE:", req.file);
 
-    const {
-      eventDetails_title,
-      eventDetails_tagline,
-      eventDetails_duration,
-      eventDetails_difficulty,
-      eventDetails_ageGroup,
-      eventDetails_altitude,
-      eventDetails_price,
-      eventDetails_desc,
-      eventDetails_date
-    } = req.body;
+      const {
+        eventDetails_title,
+        eventDetails_tagline,
+        eventDetails_duration,
+        eventDetails_difficulty,
+        eventDetails_ageGroup,
+        eventDetails_altitude,
+        eventDetails_price,
+        eventDetails_desc,
+        eventDetails_date,
+      } = req.body;
 
-    const imagePath = req.file ? "/images/Events/" + req.file.filename : null;
+      const imagePath = req.file ? "/images/Events/" + req.file.filename : null;
 
-    // ✅ Date format MySQL compatible (YYYY-MM-DD)
-    let eventDate = eventDetails_date ? new Date(eventDetails_date).toISOString().split("T")[0] : null;
+      // ✅ Date format MySQL compatible (YYYY-MM-DD)
+      let eventDate = eventDetails_date
+        ? new Date(eventDetails_date).toISOString().split("T")[0]
+        : null;
 
-    const sql = `
+      const sql = `
       INSERT INTO events 
       (title, tagline, image, duration, difficulty, age_group, altitude, price, description, event_date) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-    const [result] = await db.query(sql, [
-      eventDetails_title,
-      eventDetails_tagline,
-      imagePath,
-      eventDetails_duration,
-      eventDetails_difficulty,
-      eventDetails_ageGroup,
-      eventDetails_altitude,
-      eventDetails_price,
-      eventDetails_desc,
-      eventDate
-    ]);
+      const [result] = await db.query(sql, [
+        eventDetails_title,
+        eventDetails_tagline,
+        imagePath,
+        eventDetails_duration,
+        eventDetails_difficulty,
+        eventDetails_ageGroup,
+        eventDetails_altitude,
+        eventDetails_price,
+        eventDetails_desc,
+        eventDate,
+      ]);
 
-    console.log("✅ Event inserted:", result);
-    res.redirect("/"); // ✅ redirect after success
+      console.log("✅ Event inserted:", result);
+      res.redirect("/"); // ✅ redirect after success
+    } catch (err) {
+      console.error("❌ SQL ERROR:", err.message);
+      res.status(500).send("Error saving event details.");
+    }
+  }
+);
+
+// Admin Events Page - List all events
+app.get("/admin_events", async (req, res) => {
+  const [events] = await db.query("SELECT * FROM events_summary");
+  res.render("admin_events", { events });
+});
+
+app.delete("/admin_events/:title", async (req, res) => {
+  const eventTitle = req.params.title;
+
+  try {
+    await db.query("DELETE FROM events_summary WHERE title = ?", [eventTitle]);
+    res.json({ success: true });
   } catch (err) {
-    console.error("❌ SQL ERROR:", err.message);
-    res.status(500).send("Error saving event details.");
+    console.error(err);
+    res.json({ success: false });
   }
 });
 
+// Admin Login Page
+app.get("/admin_login", (req, res) => {
+  res.render("admin_login");
+});
+
+// Admin validation
+app.post("/admin_login", async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.render("admin_login", { error: "Please enter both email and password" });
+  }
+
+  const [rows] = await db.query(
+    "SELECT * FROM admin WHERE email = ? AND password = ?",
+    [email, password]
+  ).catch(next);  // ❗ error ko next() se Express ko de diya
+
+  if (!rows) return; // agar error aaya to yahin ruk jaayega
+
+  if (rows.length > 0) {
+    req.session.admin = rows[0];
+    return res.redirect("/admin_panel");
+  } else {
+    return res.render("admin_login", { error: "Invalid Email or Password" });
+  }
+});
+
+// Admin Logout
+app.get("/admin_logout", (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error("Logout error:", err);
+            return res.send("Error logging out");
+        }
+        res.redirect("/admin_login");
+    });
+});
 
 
 
